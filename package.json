@@ -1,0 +1,36 @@
+{
+  "name": "migration-planner",
+  "version": "0.1.0",
+  "description": "Generate a practical migration plan from dependency manifests and requested version changes.",
+  "type": "module",
+  "bin": {
+    "migration-planner": "./src/cli.js"
+  },
+  "scripts": {
+    "test": "node test/run-tests.js"
+  },
+  "keywords": [
+    "cli",
+    "developer-tools",
+    "open-source",
+    "ai-workflow"
+  ],
+  "author": "niuxinhuai",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niuxinhuai/migration-planner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/niuxinhuai/migration-planner/issues"
+  },
+  "homepage": "https://github.com/niuxinhuai/migration-planner#readme",
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

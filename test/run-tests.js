@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const cli = path.join(root, 'src', 'cli.js');
+const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'migration-planner-'));
+fs.writeFileSync(path.join(tmp, 'package.json'), JSON.stringify({ dependencies: { react: '^18.0.0' }, devDependencies: { vitest: '^1.0.0' } }));
+const out = execFileSync(process.execPath, [cli, '--from', 'React 18', '--to', 'React 19'], { cwd: tmp, encoding: 'utf8' });
+assert.match(out, /React 18 -> React 19/);
+assert.match(out, /frontend/);
+console.log('migration-planner tests passed');
