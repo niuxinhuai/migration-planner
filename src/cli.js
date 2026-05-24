@@ -8,7 +8,7 @@ if (has('--help') || has('-h')) {
   console.log(`migration-planner v${VERSION}
 
 Usage:
-  migration-planner [--from text] [--to text] [--manifest package.json] [--json]`);
+  migration-planner [--from text] [--to text] [--manifest package.json] [--preset react|next|node|typescript|flutter|harmonyos] [--json]`);
   process.exit(0);
 }
 if (has('--version')) { console.log(VERSION); process.exit(0); }
@@ -16,6 +16,7 @@ const json = has('--json');
 const manifest = val('--manifest', fs.existsSync('package.json') ? 'package.json' : '');
 const from = val('--from', 'current stack');
 const to = val('--to', 'target stack');
+const preset = val('--preset', '');
 let pkg = {};
 if (manifest && fs.existsSync(manifest)) {
   try { pkg = JSON.parse(fs.readFileSync(manifest, 'utf8')); } catch (error) { console.error(`Unable to read manifest: ${error.message}`); process.exit(1); }
@@ -31,6 +32,14 @@ const areas = [
   names.some((n) => /prisma|sequelize|typeorm|mongoose/.test(n)) && 'database models and migrations'
 ].filter(Boolean);
 const commands = packageManager === 'pnpm' ? ['pnpm install', 'pnpm test'] : packageManager === 'yarn' ? ['yarn install', 'yarn test'] : packageManager === 'npm' ? ['npm install', 'npm test'] : ['install dependencies with the project package manager', 'run the project test suite'];
+const presetRules = {
+  react: ['Check React DOM/client entry points.', 'Audit strict mode behavior and deprecated APIs.', 'Run component tests and browser smoke tests.'],
+  next: ['Review app/router and pages/router boundaries.', 'Check server/client component usage.', 'Run build plus route smoke tests.'],
+  node: ['Check runtime version in CI, Docker, and local docs.', 'Audit ESM/CJS boundaries.', 'Run startup and integration tests.'],
+  typescript: ['Run typecheck before and after dependency changes.', 'Review tsconfig changes and generated types.', 'Fix type errors before runtime changes.'],
+  flutter: ['Run flutter doctor and inspect SDK constraints.', 'Regenerate platform files only when intentional.', 'Run widget tests and target platform smoke tests.'],
+  harmonyos: ['Check DevEco/HarmonyOS SDK and hvigor versions.', 'Review oh-package lockfile and generated files.', 'Run ArkTS build and affected module smoke tests.']
+};
 const plan = {
   migration: `${from} -> ${to}`,
   packageManager,
@@ -46,6 +55,7 @@ const plan = {
     'Run focused regression tests for detected areas plus one full CI-equivalent pass.',
     'Prepare rollback notes, release checks, and post-release monitoring signals.'
   ],
+  presetChecklist: presetRules[preset] || [],
   risks: [
     'Transitive dependency breaking changes.',
     'Local and CI runtime drift.',
@@ -70,6 +80,9 @@ ${commands.map((cmd) => `- ${cmd}`).join('\n')}
 
 ## Phases
 ${plan.phases.map((p, i) => `${i + 1}. ${p}`).join('\n')}
+
+## Preset checklist
+${plan.presetChecklist.length ? plan.presetChecklist.map((r) => `- ${r}`).join('\n') : '- No preset selected. Use --preset for stack-specific checks.'}
 
 ## Risks
 ${plan.risks.map((r) => `- ${r}`).join('\n')}

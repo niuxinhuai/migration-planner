@@ -1,0 +1,10 @@
+{
+  "recommendedPresets": [
+    "react",
+    "next",
+    "node",
+    "typescript",
+    "flutter",
+    "harmonyos"
+  ]
+}

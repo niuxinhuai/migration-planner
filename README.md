@@ -27,6 +27,7 @@ migration-planner --help
 - Reads package.json and detects package manager from lockfiles.
 - Identifies frontend, backend, testing, build, TypeScript, and database migration areas.
 - Outputs phases, verification commands, risks, and rollback notes.
+- Includes stack presets for React, Next.js, Node.js, TypeScript, Flutter, and HarmonyOS.
 - Supports JSON output for automation.
 
 ### Usage
@@ -34,6 +35,8 @@ migration-planner --help
 ```bash
 migration-planner --from "React 18" --to "React 19"
 migration-planner --manifest examples/package.json
+migration-planner --preset react
+migration-planner --preset harmonyos
 migration-planner --json
 ```
 
@@ -69,6 +72,7 @@ migration-planner --help
 - 读取 package.json，并根据 lockfile 判断包管理器。
 - 识别前端、后端、测试、构建、TypeScript 和数据库迁移影响面。
 - 输出迁移阶段、验证命令、风险和回滚说明。
+- 包含 React、Next.js、Node.js、TypeScript、Flutter、HarmonyOS 迁移预设。
 - 支持 JSON 输出，便于自动化。
 
 ### 用法
