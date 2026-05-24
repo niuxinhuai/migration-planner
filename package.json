@@ -7,7 +7,8 @@
     "migration-planner": "./src/cli.js"
   },
   "scripts": {
-    "test": "node test/run-tests.js"
+    "test": "node test/run-tests.js",
+    "smoke": "migration-planner --help"
   },
   "keywords": [
     "cli",
@@ -27,6 +28,7 @@
   "homepage": "https://github.com/niuxinhuai/migration-planner#readme",
   "files": [
     "src",
+    "examples",
     "README.md",
     "LICENSE"
   ],

@@ -22,23 +22,30 @@ npm link
 migration-planner --help
 ```
 
-### Usage
+### Features
 
-Run in a project, optionally naming the migration.
+- Reads package.json and detects package manager from lockfiles.
+- Identifies frontend, backend, testing, build, TypeScript, and database migration areas.
+- Outputs phases, verification commands, risks, and rollback notes.
+- Supports JSON output for automation.
+
+### Usage
 
 ```bash
 migration-planner --from "React 18" --to "React 19"
-migration-planner --manifest package.json --json
+migration-planner --manifest examples/package.json
+migration-planner --json
 ```
 
-### Status
+### Automation
 
-This is an MVP designed to be useful immediately and easy to extend. It has no runtime dependencies and targets Node.js 18+.
+Use this as a planning tool before starting a migration branch.
 
 ### Test
 
 ```bash
 npm test
+npm --cache /tmp/npm-cache pack --dry-run .
 ```
 
 ## 中文
@@ -57,21 +64,28 @@ npm link
 migration-planner --help
 ```
 
-### 用法
+### 功能
 
-在项目目录运行，也可以指定迁移目标。
+- 读取 package.json，并根据 lockfile 判断包管理器。
+- 识别前端、后端、测试、构建、TypeScript 和数据库迁移影响面。
+- 输出迁移阶段、验证命令、风险和回滚说明。
+- 支持 JSON 输出，便于自动化。
+
+### 用法
 
 ```bash
 migration-planner --from "React 18" --to "React 19"
-migration-planner --manifest package.json --json
+migration-planner --manifest examples/package.json
+migration-planner --json
 ```
 
-### 当前状态
+### 自动化
 
-这是一个可以直接使用的 MVP，重点是小、清晰、容易二次开发。运行时无第三方依赖，要求 Node.js 18+。
+Use this as a planning tool before starting a migration branch.
 
 ### 测试
 
 ```bash
 npm test
+npm --cache /tmp/npm-cache pack --dry-run .
 ```
